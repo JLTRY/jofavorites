@@ -13,8 +13,12 @@ function readsync($_get, &$result)
 	{
 		$jsonfile = $_get['jsonfile'];
 	}
-	if (($jsonfile != NULL) && (file_exists($jsonfile)))
+	if ($jsonfile != NULL)
 	{
+        if (!file_exists($jsonfile)) {
+            $result = "File does not exist ". $jsonfile;
+            return;
+        }
 		$root = JsonFavorites::convertjsontoroot($jsonfile);
         $options = array(
           'path'           => 'logs',           // path to the logfile ('.' = logfile life in same directory)

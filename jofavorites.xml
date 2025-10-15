@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" method="upgrade">
+	<name>Content - JO's Favorites</name>
+	<author>Jean-Luc TRYOEN</author>
+	<creationDate>July 2012</creationDate>
+	<copyright>Copyright (C) 2012 Jean-Luc TRYOEN. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>jltryoen@orange.fr</authorEmail>
+	<authorUrl>www.jltryoen.fr</authorUrl>
+	<version>1.0.1</version>
+	<description>JO's Favorites  plugin, use it with {favorites name=xxx output=wiki|html like=yyy path=zzz}</description>
+	<namespace path="src">JLTRY\Plugin\Content\JOFavorites</namespace>
+	<files>
+		<folder plugin="jofavorites">services</folder>
+		<folder>src</folder>
+		<folder>lib</folder>
+	</files>
+	<media destination="plg_content_jofavorites" folder="media">
+		<filename>joomla.asset.json</filename>
+		<folder>js</folder>
+		<folder>css</folder>
+	</media>
+	<config>
+		<fields name="params">
+			<fieldset name="basic"
+				addfieldprefix="JLTRY\Plugin\Content\JOFavorites\Field"
+			>
+				<field name="external" type="radio"
+					default="0"
+					description="External"
+					label="External">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+				<field
+					name="nouser"
+					type="integer"
+					class="inputbox"
+					default="6"
+					first="0"
+					last="10"
+					step="1"
+					label="nouser"
+					description="nouser"
+					showon="external:1"
+				/>
+				<field
+					name="url"
+					type="url"
+					size="40"
+					class="inputbox"
+					default="http://weave.jltryoen.fr/favorites/readsync.php"
+					label="Url"
+					description="Url"
+					showon="external:1"
+				/>
+				<field
+					name="user"
+					type="text"
+					size="40"
+					class="inputbox"
+					default=""
+					label="User"
+					description="User"
+					showon="external:1"
+				/>
+				<field
+					name="password"
+					type="password"
+					size="40"
+					class="inputbox"
+					default=""
+					label="Passwd"
+					description="Passwd"
+					showon="external:1"
+				/>
+				<field
+					name="jsonfileupload"
+					type="ajaxupload"
+					label="Upload file"
+					description="Upload your file via AJAX."
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
