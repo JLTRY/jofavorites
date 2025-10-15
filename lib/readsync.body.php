@@ -3,20 +3,19 @@ require_once("htmlitem.php");
 require_once("htmldirectory.php");
 require_once("htmlfile.php");
 require_once("htmlroot.php");
+require_once("jsonfavorites.php");
 
 
 
-
-function readsync($_get, &$result, $nouser = DEFAULT_USER)
+function readsync($_get, &$result)
 {
-	if (array_key_exists('nouser', $_get))
+	if (array_key_exists('jsonfile', $_get))
 	{
-		$nouser = $_get['nouser'];
+		$jsonfile = $_get['jsonfile'];
 	}
-	$serfile = FirefoxUsers::getserfile($nouser);
-	if ($serfile != NULL)
+	if (($jsonfile != NULL) && (file_exists($jsonfile)))
 	{
-		$root = htmlroot::load($serfile);
+		$root = JsonFavorites::convertjsontoroot($jsonfile);
         $options = array(
           'path'           => 'logs',           // path to the logfile ('.' = logfile life in same directory)
           'filename'       => 'log',         // main name, _ and date will be added
