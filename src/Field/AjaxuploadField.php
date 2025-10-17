@@ -10,7 +10,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 
 
-class AjaxUploadField extends FormField
+class AjaxuploadField extends FormField
 {
     protected $type = 'AjaxUpload';
 

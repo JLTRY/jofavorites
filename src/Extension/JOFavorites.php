@@ -94,9 +94,9 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
 						$_result[$key] = $value;
 					}
 					$favorites = $this->favorites($_result);
-					//$startfavorite = "<!-- start favorites " . $matches[1][$i] . $favorites . "} -->\n";
-					//$endfavorite = "\n<!-- end favorites " . $matches[1][$i] . "} -->";
-					$p_content = $favorites;
+					$startfavorite = "<!-- start favorites " . $matches[1][$i] . $favorites . "} -->\n";
+					$endfavorite = "\n<!-- end favorites " . $matches[1][$i] . "} -->";
+					$p_content = $startfavorite . $favorites . $endfavorite;
 					
 					$article->text = str_replace("{favorites " . $matches[1][$i] . "}", $p_content, $article->text);
 				}
