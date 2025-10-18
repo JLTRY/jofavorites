@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="content" method="upgrade">
-	<name>Content - JO's Favorites</name>
+	<name>PLG_CONTENT_JOFAVORITES</name>
 	<author>Jean-Luc TRYOEN</author>
 	<creationDate>July 2012</creationDate>
 	<copyright>Copyright (C) 2012 Jean-Luc TRYOEN. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<authorEmail>jltryoen@orange.fr</authorEmail>
 	<authorUrl>www.jltryoen.fr</authorUrl>
-	<version>1.0.1</version>
-	<description>JO's Favorites  plugin, use it with {favorites name=xxx output=wiki|html like=yyy path=zzz}</description>
+	<version>1.0.0</version>
+	<description>PLG_CONTENT_JOFAVORITES_DESCRIPTION</description>
 	<namespace path="src">JLTRY\Plugin\Content\JOFavorites</namespace>
 	<files>
 		<folder plugin="jofavorites">services</folder>
 		<folder>src</folder>
 		<folder>lib</folder>
+		<folder>language</folder>
 	</files>
 	<media destination="plg_content_jofavorites" folder="media">
 		<filename>joomla.asset.json</filename>
 		<folder>js</folder>
 		<folder>css</folder>
 	</media>
+	<updateservers>
+		<server type="extension" priority="1" name="JO's Favorites Updates">
+			https://raw.githubusercontent.com/JLTRY/jofavorites/master/jofavorites-update.xml
+		</server>
+	</updateservers>
 	<config>
 		<fields name="params">
 			<fieldset name="basic"

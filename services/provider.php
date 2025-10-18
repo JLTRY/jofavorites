@@ -1,5 +1,4 @@
 <?php
-
 /**
 * @copyright Copyright (C) 2025 Jean-Luc TRYOEN. All rights reserved.
 * @license GNU/GPL
