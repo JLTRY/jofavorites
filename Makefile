@@ -1,4 +1,4 @@
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 VERSION2 = $(shell echo $(VERSION)|sed 's/ /-/g')
 PACKAGE = jofavorites
 ZIPFILE = $(PACKAGE)-$(VERSION2).zip
@@ -17,7 +17,7 @@ ALL : $(ZIPFILE) fixsha
 
 
 
-ZIPIGNORES = -x "*.git*" -x "*.svn*" -x "thumbs/*" -x "*.zip" -x "tests/*"
+ZIPIGNORES = -x "*.git*" -x "*.svn*" -x "thumbs/*" -x "*.zip" -x "tests/*" -x Makefile -x "*.sh" -x "*/*/*.git*"
 
 
 

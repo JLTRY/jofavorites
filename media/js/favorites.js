@@ -13,7 +13,8 @@ $(document).ready(function() {
 				changebackground(item, $(this).attr('icon'));
 			}else if ((url.protocol == 'https') ||(url.protocol == 'http')){
 				$.ajax({
-					url : "http://images.jltryoen.fr/PHP-Grab-Favicon/get-fav-name.php?url=" + url.protocol +"://" + url.host,
+					url : uriroot + "/index.php?option=com_ajax&plugin=jofavorites&" + 
+						"format=json&group=content&method=grabicon&url=" + url.protocol +"://" + url.host ,
 					type : 'GET',
 					url_host : url.host,
 					item, item,

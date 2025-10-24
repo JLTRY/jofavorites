@@ -22,6 +22,8 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Utility\Utility;
 use Joomla\Event\SubscriberInterface;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\Utilities\ArrayHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -42,7 +44,6 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         return [
             'onContentPrepare'  => 'onContentPrepare',
             'onAjaxJofavorites' => 'onAjaxJOFavorites'
-
         ];
     }
 
@@ -158,7 +159,6 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
     */
     private function favorites($_params)
     {
-        $content = "new favorites<br>";
         if (is_array($_params) == false) {
             return  "error for params:" . $_params;
         }
@@ -170,7 +170,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
         $wa->getRegistry()->addRegistryFile('media/plg_content_jofavorites/joomla.asset.json');
         $wa->usePreset("plugin.jofavorites");
-//Log::add('favorites:'. print_r($_params, true), Log::WARNING, 'favoris');
+        $wa->addInlineScript('var uriroot="' . URI::root() . '";', ['position' => 'before'], [], ['plugin.jofavorites']);
         if ($this->params->get('external')) {
             $this->getsync($_params, $content);
         } else {
@@ -180,33 +180,18 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         return $content;
     }
 
-
-
-    public function onAjaxJOFavorites(Event $event): void
+    public function onAjaxJOFavoritesUpload($file)
     {
-
-        // Permissions check: Only allow backend users, etc.
-        $app = Factory::getApplication();
-//$app->enqueueMessage("onAjaxJoFavoritesUpload", "warning");
-        if (!$app->isClient('administrator')) {
-            echo new \Joomla\CMS\Response\JsonResponse(null, 'Forbidden', true);
-            $app->close();
-        }
-
-        $input = $app->input;
-        $file = $input->files->get('file', null, 'raw');
-        $method = $input->getCmd('method', null);
         if (!$file || !isset($file['tmp_name'])) {
-        //$app->enqueueMessage("onAjaxJoFavoritesUpload no file uploaded", "warning");
+            //$app->enqueueMessage("onAjaxJoFavoritesUpload no file uploaded", "warning");
             echo new \Joomla\CMS\Response\JsonResponse(null, 'No file uploaded', true);
             $app->close();
         }
-
         $uploadDir = JPATH_ROOT . '/files/jofavorites/';
-        \Joomla\Filesystem\Folder::create($uploadDir);
-        $filename = \Joomla\Filesystem\File::makeSafe($file['name']);
+        Folder::create($uploadDir);
+        $filename = File::makeSafe($file['name']);
         $dest = $uploadDir . $filename;
-        if (\Joomla\Filesystem\File::upload($file['tmp_name'], $dest)) {
+        if (File::upload($file['tmp_name'], $dest)) {
             $relativePath = 'files/jofavorites/' . $filename;
         //$app->enqueueMessage("onAjaxJoFavoritesUpload " . $relativePath, "warning");
             $output = ['path' => $relativePath];
@@ -214,11 +199,50 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         //$app->enqueueMessage("onAjaxJoFavoritesUpload upload failed", "warning");
             $output = 'Upload failed';
         }
+        return $output;
+    }
+    
+    
+     public function onAjaxJOFavoritesGrabIcon($url)
+     {
+        if ($url == null)
+        {
+            return "";
+        }
+        require_once(dirname(__FILE__) . "/../../lib/PHP-Grab-Favicon/get-fav.php");
+        $grap_favicon = array(
+            'URL' => $url,   // URL of the Page we like to get the Favicon from
+            'SAVE'=> false,   // Save Favicon copy local (true) or return only favicon url (false)
+            'DIR' =>  JPATH_ROOT ."/files/jofavorites",   // Local Dir the copy of the Favicon should be saved
+            'TRY' => true,   // Try to get the Favicon frome the page (true) or only use the APIs (false)
+            'DEV' => false   // Give all Debug-Messages ('debug') or only make the work (null)
+        );
+        return \grap_favicon($grap_favicon);
+    }
+
+    public function onAjaxJOFavorites(Event $event): void
+    {
+        // Permissions check: Only allow backend users, etc.
+        $app = Factory::getApplication();
+        //$app->enqueueMessage("onAjaxJoFavoritesUpload", "warning");
+        $input = $app->input;
+        $method = $input->getCmd('method', null);
+        switch ($method) {
+            case 'upload':
+                if (!$app->isClient('administrator')) {
+                    $event->setArgument('result', 'Forbidden');
+                    return;
+                }
+                $output = $this->onAjaxJOFavoritesUpload($input->files->get('file', null, 'raw'));
+                break;
+            case 'grabicon';
+                $output = $this->onAjaxJOFavoritesGrabIcon($input->getCmd('url', null));
+                break;
+        }
         if ($event instanceof ResultAwareInterface) {
             $event->addResult($output);
         } else {
             $event->setArgument('result', $output);
         }
-        //$app->close();
     }
 }

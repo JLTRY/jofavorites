@@ -3,13 +3,13 @@
 	<update>
 		<name>JO's Favorites</name>
 		<description>Displays Favorites in Articles coming from Firefox bookmarks</description>
-		<element>jocfavorites</element>
+		<element>jofavorites</element>
 		<type>plugin</type>
 		<client>site</client>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 		<infourl title="JO's Favorites">http://www.jltryoen.fr</infourl>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/JLTRY/jocodehighlight/releases/download/v1.0.0/jofavorites-1.0.0.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/JLTRY/jocodehighlight/releases/download/v1.0.1/jofavorites-1.0.1.zip</downloadurl>
 		</downloads>
 		<tags>
 			<tag>Stable</tag>
@@ -18,9 +18,9 @@
 		<maintainerurl>http://www.jltryoen.fr</maintainerurl>
 		<php_minimum>8.0</php_minimum>
 		<targetplatform name="joomla" version="(4\.[01234]|5\.[01234])"/>
-		<sha256>E53D64B8FD642EC2A56A368578D919132BAB45683C2CB807F9B5B4BC28A04384</sha256>
-		<sha384>864216A3E3D52EDAAF52EE2AE465792061CE8BA373E40A834C6753ABB0D1FE34132A1B6781532FAFEFC7ADA363D611F5</sha384>
-		<sha512>A3D61A8DA3EA6FC48BCB87F05243D284C642101D3B8F69C1D5D660151DAC0BCF09C378712EAEC00831DB26D52ACE879F2F628E10E71782F41A1B8C3D85F41C69</sha512>
+		<sha256>7B06A705A56AAF17F15FACC1406D7D5222F758EDF04CA74B12D5424D1096DAAD</sha256>
+		<sha384>98D68AB91976E2D4ABA635F7A0A42A6F9C4FFBABFC8E950BE347CE788A9843E1EBF35599008A86B81C23607C7679552C</sha384>
+		<sha512>335F377C4DB4B793C2B47CD87FCB97C2D77D309E83E0A3ECC8FF28F89D685A375AB994F06A27F208E86E499487C3A73F676148989A13715DDB0311EB68100B3F</sha512>
 	</update>
 </updates>
 
