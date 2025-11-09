@@ -67,7 +67,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         // In Joomla 4 a generic Event is passed
         // In Joomla 5 a concrete ContentPrepareEvent is passed
         [$context, $article, $params, $page] = array_values($event->getArguments());
-// Simple performance check to determine whether bot should process further.
+        // Simple performance check to determine whether bot should process further.
         if (strpos($article->text, '{favorites') === false) {
             return true;
         }
@@ -97,7 +97,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
                             $_result[$key] = $value;
                     }
                     $favorites = $this->favorites($_result);
-                    $startfavorite = "<!-- start favorites " . $matches[1][$i] . $favorites . "} -->\n";
+                    $startfavorite = "<!-- start favorites " . $matches[1][$i] .  "} -->";
                     $endfavorite = "\n<!-- end favorites " . $matches[1][$i] . "} -->";
                     $p_content = $startfavorite . $favorites . $endfavorite;
                     $article->text = str_replace("{favorites " . $matches[1][$i] . "}", $p_content, $article->text);
