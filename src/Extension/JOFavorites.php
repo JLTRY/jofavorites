@@ -26,6 +26,7 @@ use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Utilities\ArrayHelper;
 
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -46,7 +47,20 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
             'onAjaxJofavorites' => 'onAjaxJOFavorites'
         ];
     }
-
+    
+    public static function parseAttributes($string, &$retarray)
+    {
+        $pairs = explode(';', trim($string));
+        foreach ($pairs as $pair) {
+            if ($pair == "") {
+                continue;
+            }
+            $pos = strpos($pair, "=");
+            $key = substr($pair, 0, $pos);
+            $value = substr($pair, $pos + 1);
+            $retarray[$key] = $value;
+        }
+    }
     /**
      * @param   string    The context of the content being passed to the plugin.
      * @param   object    The article object.  Note $article->text is also available
@@ -81,26 +95,25 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         // plugin only processes if there are any instances of the plugin in the text
         if ($count) {
             for ($i = 0; $i < $count; $i++) {
-                $_result = array("jsonfile" =>
-                    str_replace(
-                        "/",
-                        DIRECTORY_SEPARATOR,
-                        JPATH_ROOT . DIRECTORY_SEPARATOR . $this->params->get('jsonfileupload')
-                    ));
                 if (@$matches[1][$i]) {
                     $inline_params = $matches[1][$i];
-                    $pairs = explode(';', trim($inline_params));
-                    foreach ($pairs as $pair) {
-                            $pos = strpos($pair, "=");
-                            $key = substr($pair, 0, $pos);
-                            $value = substr($pair, $pos + 1);
-                            $_result[$key] = $value;
+                    // accept both syntax {favorites name=xxx;output=css3treeview} {favorites name="xxx" output="css3treeview"}
+                    if ( strpos( $inline_params, "\"") === false ) {
+                        $localparams = array();
+                        self::parseAttributes($inline_params, $localparams);
+                    } else {
+                        $localparams = Utility::parseAttributes($inline_params);
                     }
-                    $favorites = $this->favorites($_result);
-                    $startfavorite = "<!-- start favorites " . $matches[1][$i] .  "} -->";
-                    $endfavorite = "\n<!-- end favorites " . $matches[1][$i] . "} -->";
+                    $localparams["jsonfile"] = str_replace(
+                                                "/",
+                                                DIRECTORY_SEPARATOR,
+                                                JPATH_ROOT . DIRECTORY_SEPARATOR . $this->params->get('jsonfileupload')
+                                            );
+                    $favorites = $this->favorites($localparams);
+                    $startfavorite = "<!-- start favorites " .  $inline_params .  "} -->";
+                    $endfavorite = "\n<!-- end favorites " .  $inline_params . "} -->";
                     $p_content = $startfavorite . $favorites . $endfavorite;
-                    $article->text = str_replace("{favorites " . $matches[1][$i] . "}", $p_content, $article->text);
+                    $article->text = str_replace("{favorites " .  $inline_params . "}", $p_content, $article->text);
                 }
             }
         } else {
