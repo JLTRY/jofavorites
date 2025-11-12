@@ -1,0 +1,47 @@
+{
+	"name": "Favorites",
+	"version": "1.0",
+	"author": [
+		"JEan-Luc Tryoen"
+	],
+	"url": "https://wiki.jltryoen.fr",
+	"license-name": "GPL-2.0-or-later",
+	"type": "parserhook",
+	"requires": {
+		"MediaWiki": ">= 1.33"
+	},
+	"MessagesDirs": {
+		"Favorites": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"FavoritesParser": "favoritesparser.php",
+		"Favorites": "favorites.php"
+	},
+	"ResourceModules": {
+		"ext.favorites.favorites": {
+			"styles": "css3treeview.css",
+			"scripts": ["url.min.js", "favorites.js"],
+			"dependencies": [
+				"mediawiki.api",
+				"mediawiki.util",
+				"mediawiki.user",
+				"mediawiki.Title"
+			]
+		}
+	},
+	"ExtensionMessagesFiles": {
+		"favorites": "favoritesparser.i18n.php"
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": "Favorites/resources"
+	},
+
+	"Hooks": {
+		"ParserFirstCallInit": ["FavoritesParser::Setup", "Favorites::Setup"],
+		"BeforePageDisplay": "FavoritesParser::onBeforePageDisplay"
+	},
+	"manifest_version": 1
+}
