@@ -1,0 +1,59 @@
+{
+	"name": "JOFavorites",
+	"version": "1.0",
+	"author": [
+		"JEan-Luc Tryoen"
+	],
+	"url": "https://wiki.jltryoen.fr",
+	"license-name": "GPL-2.0-or-later",
+	"type": "parserhook",
+	"requires": {
+		"MediaWiki": ">= 1.33"
+	},
+	"MessagesDirs": {
+		"Favorites": [
+			"i18n"
+		]
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": "JOFavorites/resources"
+	},
+	"ResourceModules": {
+		"ext.favorites.favorites": {
+			"styles": "css/css3treeview.css",
+			"scripts": ["js/url.min.js", "js/favorites.js"],
+			"dependencies": [
+				"mediawiki.api",
+				"mediawiki.util",
+				"mediawiki.user",
+				"mediawiki.Title"
+			]
+		}
+	},
+	"ExtensionMessagesFiles": {
+		"favorites": "favoritesparser.i18n.php"
+	},
+
+    "AutoloadNamespaces": {
+		"MediaWiki\\Extension\\JOFavorites\\": "includes/"
+	},
+	"AutoloadClasses": {
+        "FavoritesHooks": "includes/FavoritesHooks.php",
+		"FavoritesParser": "includes/FavoritesParser.php",
+		"Favorites": "includes/Favorites.php"
+	},
+	"Hooks": {
+		"ParserFirstCallInit" :"FavoritesHooks",
+		"BeforePageDisplay": "MediaWiki\\Extension\\JOFavorites\\FavoritesParser::onBeforePageDisplay"
+	},
+    "HookHandlers": {
+		"FavoritesHooks": {
+			"class": "MediaWiki\\Extension\\JOFavorites\\FavoritesHooks",
+			"services": [
+				"HookContainer"
+			]
+		}
+	},
+	"manifest_version": 1
+}

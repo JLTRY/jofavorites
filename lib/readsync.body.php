@@ -19,6 +19,7 @@ require_once("htmldirectory.php");
 require_once("htmlfile.php");
 require_once("htmlroot.php");
 require_once("jsonfavorites.php");
+
 function readsync($params, &$result)
 {
     if (array_key_exists('jsonfile', $params)) {
@@ -141,7 +142,7 @@ function readsync($params, &$result)
             }
             //$result .= '<link rel="stylesheet" type="text/css" href="http://www.jltryoen.fr/favorites/css/css3treeview.css">';
             if (preg_match("/css3treeview/", $output)) {
-                $result .= '<' . "$tag" . ' class="css-treeview ' . $class . '" ' . $style . '>' . $head;
+                $result .= '<div class="css-treeview ' . $class . '">' . $head;
             }
             foreach ($children as $child) {
                 switch ($output) {
@@ -233,7 +234,7 @@ function readsync($params, &$result)
                 $result .= '</script>';
             }
             if (preg_match("/css3treeview/", $output)) {
-               $result .= '</' . $tag .'>';
+               $result .= '</div>';
             }
         }
     }

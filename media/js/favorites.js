@@ -12,16 +12,18 @@ $(document).ready(function() {
 			if ($(this).attr('icon')) {
 				changebackground(item, $(this).attr('icon'));
 			}else if ((url.protocol == 'https') ||(url.protocol == 'http')){
+				var url = uriroot + "/index.php?option=com_ajax&plugin=jofavorites&" + 
+						"format=json&group=content&method=grabicon&url=" + url.protocol +"://" + url.host;
 				$.ajax({
-					url : uriroot + "/index.php?option=com_ajax&plugin=jofavorites&" + 
-						"format=json&group=content&method=grabicon&url=" + url.protocol +"://" + url.host ,
+					url : url,
 					type : 'GET',
 					url_host : url.host,
 					item, item,
 					dataType : 'html', // On désire recevoir du HTML
 					success : function(code_html, statut){ // code_html contient le HTML renvoyé
-						if (code_html != "") {
-							changebackground(this.item, code_html);
+						var icon = JSON.parse(code_html).data[0];
+						if (icon != "") {
+							changebackground(this.item, icon);
 						}
 					}
 				});
