@@ -15,9 +15,15 @@
 			"i18n"
 		]
 	},
+    "config": {
+		"JOFavoritesuriroot": {
+			"value": "http://joomla.jltryoen.fr/",
+			"description": "The root uri to retrieve favicons"
+		}
+	},
 	"ResourceFileModulePaths": {
-		"localBasePath": "resources",
-		"remoteExtPath": "JOFavorites/resources"
+		"localBasePath": "media",
+		"remoteExtPath": "JOFavorites/media"
 	},
 	"ResourceModules": {
 		"ext.favorites.favorites": {
@@ -45,7 +51,7 @@
 	},
 	"Hooks": {
 		"ParserFirstCallInit" :"FavoritesHooks",
-		"BeforePageDisplay": "MediaWiki\\Extension\\JOFavorites\\FavoritesParser::onBeforePageDisplay"
+		"BeforePageDisplay": "FavoritesHooks"
 	},
     "HookHandlers": {
 		"FavoritesHooks": {

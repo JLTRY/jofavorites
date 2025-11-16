@@ -6,24 +6,7 @@ if (!defined("_JEXEC")){
 }
 
 class FavoritesParser {
-	/*public static function onExtensionFunctions() {
-		global $wgFavoritesViewOnly;
 
-		if ( !$wgFavoritesViewOnly ) {
-			global $wgLogTypes;
-
-			// Set up the new log type - favorites actions are logged to this new log
-			// TODO: Move this out of an extension function once T200385 is implemented.
-			$wgLogTypes[] = 'favorites';
-		}
-	}*/
-
-
-	public static function onBeforePageDisplay( $article ) {
-		$article->addModules("ext.favorites.favorites");
-        $script = "<script>var uriroot=\"" . "http://joomla.jltryoen.fr\";</script>";
-        $article->addHeadItem("itemName", $script);
-	}
 
 	public static function extractOptions( array $options ) {
 		$results = array();
@@ -52,7 +35,7 @@ class FavoritesParser {
 	 * @return array $results
 	 */
 
-	public static function RenderFunction( $parser ) {
+	public function RenderFunction( $parser ) {
 		//Suppose the user invoked the parser function like so:
 		//{{#favorites:foo=bar|apple=orange}}
 		$opts = array();
@@ -70,7 +53,8 @@ class FavoritesParser {
 		if (!array_key_exists('output', $options)) {
 			$options['output'] = 'css3treeview';
 		}
-        $options['jsonfile'] = dirname(__FILE__) . "/../../../data/weave/bookmarks.home2.json";
+        $config = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
+        $options['jsonfile'] = $config->get( "JOFavoritesbookmarksfile" );
         require_once(dirname(__FILE__) . "/../lib/readsync.body.php");
 		\readsync($options, $input);
         $parser->getOutput()->addModules(["ext.favorites.favorites"]);

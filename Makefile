@@ -17,7 +17,7 @@ ALL : $(ZIPFILE) fixsha
 
 
 
-ZIPIGNORES = -x "*.git*" -x "*.svn*" -x "thumbs/*" -x "*.zip" -x "tests/*" -x Makefile -x "*.sh" -x "*/*/*.git*"
+ZIPIGNORES = -x "*.git*" -x "*.svn*" -x "thumbs/*" -x "*.zip" -x "tests/*" -x Makefile -x "*.sh" -x "*/*/*.git*" -x "includes/*" -x "ext*.json" -x "favorites*.php"
 
 
 

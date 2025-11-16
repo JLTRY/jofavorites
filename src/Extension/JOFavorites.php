@@ -25,7 +25,7 @@ use Joomla\Event\SubscriberInterface;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Utilities\ArrayHelper;
-
+use Joomla\CMS\Log\Log;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -137,7 +137,13 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         $timeout = null;
         $username = $this->params->get('user');
         $password = $this->params->get('password');
-        $url = $this->params->get('url') . "?" . http_build_query($_params);
+        $syncurl =  $this->params->get('url');
+        if (parse_url($syncurl, PHP_URL_QUERY) != null) { 
+            $separ = "&";
+        } else {
+            $separ = "?";
+        }
+        $url = $syncurl . $separ . http_build_query($_params);
         $options = new \Joomla\Registry\Registry();
         $options->set(
             'transport.curl',
@@ -216,12 +222,16 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
     }
     
     
-     public function onAjaxJOFavoritesGrabIcon($url)
+     public function onAjaxJOFavoritesGrabIcon($url64, $url)
      {
-        if ($url == null)
+        if (($url == null) && ($url64 == null))
         {
             return "";
         }
+        if ($url == null) {
+            $url = base64_decode($url64);
+        }
+        Log::add('onAjaxJOFavoritesGrabIco:<=url:'. $url, Log::WARNING, 'favorites');
         require_once(dirname(__FILE__) . "/../../lib/PHP-Grab-Favicon/get-fav.php");
         $grap_favicon = array(
             'URL' => $url,   // URL of the Page we like to get the Favicon from
@@ -232,6 +242,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         );
         return \grap_favicon($grap_favicon);
     }
+    
 
     public function onAjaxJOFavorites(Event $event): void
     {
@@ -249,7 +260,18 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
                 $output = $this->onAjaxJOFavoritesUpload($input->files->get('file', null, 'raw'));
                 break;
             case 'grabicon';
-                $output = $this->onAjaxJOFavoritesGrabIcon($input->getCmd('url', null));
+                $output = $this->onAjaxJOFavoritesGrabIcon($input->getCmd('url64', null), $input->getCmd('url', null));
+                Log::add('favorites:=>:'. print_r($output, true), Log::WARNING, 'favorites');
+                break;
+            case 'readsync';
+                $params = $input->getArray();
+                $params["jsonfile"] = str_replace(
+                                                "/",
+                                                DIRECTORY_SEPARATOR,
+                                                JPATH_ROOT . DIRECTORY_SEPARATOR . $this->params->get('jsonfileupload')
+                                            );
+                $output = $this->favorites($params);
+                Log::add('favorites:=>:'. print_r($output, true), Log::WARNING, 'favorites');
                 break;
         }
         if ($event instanceof ResultAwareInterface) {
