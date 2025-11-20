@@ -137,7 +137,6 @@ class htmlfile extends htmlitem
     function writecss3treeview($level, &$result, $short = false, $maxlevel = 9999, $showkeyword = false, $openlevel = 1, $minlevel = 1, $type = 'all')
     {
         if (($type == 'all') || ($type == 'file')) {
-            $this->log_warning("writecss3treeview:" . $this->m_title);
             if (($this->m_type == 'separator') || ($this->m_type == 'text/x-moz-place-separator')) {
                 $result .= "<hr>";
             } else {

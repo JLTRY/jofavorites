@@ -99,19 +99,16 @@ class htmldirectory extends htmlitem
 
     function writecss3treeview($level, &$result, $short = false, $maxlevel = 9999, $showkeyword = false, $openlevel = 9999, $minlevel = 1, $type = 'all')
     {
-        $this->log_warning("writecss3treeview:htmldirecttory:" . $this->m_title . ":" . $level . ":" . $minlevel . ":" . $maxlevel);
         if (($level >= $minlevel) && ($level < $maxlevel)) {
             htmlitem::writelevel($level, $result);
             $result .= "<LI>";
             if (($this->getlevel() >= 1) && ($level < $maxlevel - 1)) {
-                $this->log_warning("writecss3treeview:" . $this->getlevel());
                 if ($level < $openlevel) {
                     $result .= "<input type=\"checkbox\" checked=\"checked\" >";
                 } else {
                     $result .= "<input type=\"checkbox\" >";
                 }
             } else {
-                $this->log_warning("writecss3treeview:" . "radio");
                 $result .= "<input type=\"radio\" >";
             }
             if ($this->m_title != "") {

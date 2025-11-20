@@ -31,21 +31,6 @@ function readsync($params, &$result)
             return;
         }
         $root = JsonFavorites::convertjsontoroot($jsonfile);
-        $options = array(
-          'path'           => 'logs',           // path to the logfile ('.' = logfile life in same directory)
-          'filename'       => 'log',         // main name, _ and date will be added
-          'syslog'         => false,         // true = use system log function (works only in txt format)
-          'filePermission' => 0644,          // or 0777
-          'maxSize'        => 0.002,         // in MB
-          'format'         => 'htm',         // use txt, csv or htm
-          'template'       => 'barecss',     // for htm format only: plain, terminal or barecss
-          'timeZone'       => 'UTC',         // UTC or what you like
-          'dateFormat'     => 'Y-m-d H:i:s', // see http://php.net/manual/en/function.date.php
-          'backtrace'      => true,          // true = slower but with line number of call
-        );
-        if (false) {
-            $root->addlogger($options);
-        }
         $children = array();
         $result = "";
         if (is_array($params) == false) {

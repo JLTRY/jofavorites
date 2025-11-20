@@ -69,28 +69,6 @@ class htmlitem
         }
     }
 
-    function addlogger($options)
-    {
-        $this->m_logger = new log($options);
-    }
-
-    function getlogger()
-    {
-        $parent = $this->m_parent;
-        if ($parent == null) {
-            return $this->m_logger;
-        } else {
-            return $parent->getlogger();
-        }
-    }
-
-    function log_warning($msg)
-    {
-        $logger = $this->getlogger();
-        if ($logger) {
-            $logger->warning($msg);
-        }
-    }
     function modify($params)
     {
         if (array_key_exists('title', $params)) {
