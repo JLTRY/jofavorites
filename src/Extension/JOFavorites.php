@@ -104,11 +104,13 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
                     } else {
                         $localparams = Utility::parseAttributes($inline_params);
                     }
-                    $localparams["jsonfile"] = str_replace(
+                    $localparams[($this->params->get('filetype')== 0)?"jsonfile":"htmlfile"] = str_replace(
                                                 "/",
                                                 DIRECTORY_SEPARATOR,
-                                                JPATH_ROOT . DIRECTORY_SEPARATOR . $this->params->get('jsonfileupload')
-                                            );
+                                                JPATH_ROOT . DIRECTORY_SEPARATOR .
+                                                (($this->params->get('filetype')== 0)?$this->params->get('jsonfileupload'):
+                                                                                      $this->params->get('htmlfileupload'))
+                                                );
                     $favorites = $this->favorites($localparams);
                     $startfavorite = "<!-- start favorites " .  $inline_params .  "} -->";
                     $endfavorite = "\n<!-- end favorites " .  $inline_params . "} -->";

@@ -80,11 +80,27 @@
 					description="Passwd"
 					showon="external:1"
 				/>
+				<field name="filetype" type="radio"
+					default="0"
+					description="Type of file"
+					label="File Type">
+					<option value="0">json</option>
+					<option value="1">html</option>
+					showon="external:0"
+				</field>
 				<field
 					name="jsonfileupload"
 					type="ajaxupload"
 					label="Upload file"
-					description="Upload your file via AJAX."
+					description="Upload your json file."
+					showon="external:0[AND]filetype:0"
+				/>
+				<field
+					name="htmlfileupload"
+					type="ajaxupload"
+					label="Upload file"
+					description="Upload your html file"
+					showon="external:0[AND]filetype:1"
 				/>
 			</fieldset>
 		</fields>

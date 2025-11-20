@@ -14,7 +14,6 @@
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-require_once("log.inc.php");
 $tab = "&nbsp&nbsp&nbsp&nbsp";
 /**
     http://stackoverflow.com/questions/3573313/php-remove-object-from-array

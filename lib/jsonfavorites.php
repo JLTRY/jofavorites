@@ -18,7 +18,7 @@ require_once("htmlitem.php");
 require_once("htmldirectory.php");
 require_once("htmlfile.php");
 require_once("htmlroot.php");
-require_once("log.inc.php");
+
 
 class JsonFavorites
 {
