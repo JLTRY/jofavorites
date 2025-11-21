@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<authorEmail>jltryoen@orange.fr</authorEmail>
 	<authorUrl>www.jltryoen.fr</authorUrl>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<description>PLG_CONTENT_JOFAVORITES_DESCRIPTION</description>
 	<namespace path="src">JLTRY\Plugin\Content\JOFavorites</namespace>
 	<files>
