@@ -5,6 +5,7 @@
 		"JEan-Luc Tryoen"
 	],
 	"url": "https://wiki.jltryoen.fr",
+    "description": "Display favorites exported from Firefox or Microsoft Edge",
 	"license-name": "GPL-2.0-or-later",
 	"type": "parserhook",
 	"requires": {
