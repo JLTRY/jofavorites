@@ -40,10 +40,14 @@ function readsync($params, &$result)
     } elseif (array_key_exists('serfile', $params)) {
         $serfile = $params['serfile'];
         if (!file_exists($serfile)) {
-            $result = "File does not exist " . $htmlfile;
+            $result = "File does not exist " . $serfile;
+            return;
+        } 
+        $root = htmlroot::load($serfile);
+        if ($root == null) {
+            $result = "root is null : $serfile";
             return;
         }
-        $root = htmlroot::load($serfile);
     }
     $children = array();
     $result = "";
