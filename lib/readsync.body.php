@@ -37,6 +37,13 @@ function readsync($params, &$result)
             return;
         }
         $root = HtmlFavorites::converthtmltoroot($htmlfile);
+    } elseif (array_key_exists('serfile', $params)) {
+        $serfile = $params['serfile'];
+        if (!file_exists($serfile)) {
+            $result = "File does not exist " . $htmlfile;
+            return;
+        }
+        $root = htmlroot::load($serfile);
     }
     $children = array();
     $result = "";
