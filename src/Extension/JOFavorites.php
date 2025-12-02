@@ -31,7 +31,7 @@ use Joomla\CMS\Log\Log;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-define('PF_REGEX_FAV_PATTERN', "#{favorites (.*?)}#s");
+define('JOFAV_EXEXP_FAV_PATTERN', "#{favorites (.*?)}#s");
 /**
  * JOFavorites Content Plugin
  *
@@ -85,7 +85,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         if (strpos($article->text, '{favorites') === false) {
             return true;
         }
-        preg_match_all(PF_REGEX_FAV_PATTERN, $article->text, $matches);
+        preg_match_all(JOFAV_EXEXP_FAV_PATTERN, $article->text, $matches);
         if (!$this->params->get('jsonfileupload', "") && !$this->params->get('external')) {
             $this->getApplication()->enqueueMessage("Please fill parameter jsonfile", "error");
             return true;
