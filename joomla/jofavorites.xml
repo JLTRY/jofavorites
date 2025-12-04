@@ -21,11 +21,6 @@
 		<folder>js</folder>
 		<folder>css</folder>
 	</media>
-	<updateservers>
-		<server type="extension" priority="1" name="JO's Favorites Updates">
-			https://raw.githubusercontent.com/JLTRY/jofavorites/master/jofavorites-update.xml
-		</server>
-	</updateservers>
 	<config>
 		<fields name="params">
 			<fieldset name="basic"

@@ -1,7 +1,8 @@
-VERSION = "1.0.2"
-VERSION2 = $(shell echo $(VERSION)|sed 's/ /-/g')
+VERSION = "1.0.3"
+MVERSION = "1.0.0"
 PACKAGE = jofavorites
-ZIPFILE = $(PACKAGE)-$(VERSION2).zip
+ZIPFILE = $(PACKAGE)-$(VERSION).zip
+MZIPFILE = $(PACKAGE)-$(MVERSION).zip
 UPDATEFILE = $(PACKAGE)-update.xml
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MKFILE_DIR := $(dir $(MKFILE_PATH))
@@ -13,19 +14,25 @@ PACKAGES = $(ROOT)/packages
 
 .PHONY: $(ZIPFILE)
 
-ALL : $(ZIPFILE) fixsha
+ALL : $(ZIPFILE) fixsha $(MZIPFILE)
 
 
 
-ZIPIGNORES = -x "*.git*" -x "*.svn*" -x "thumbs/*" -x "*.zip" -x "tests/*" -x Makefile -x "*.sh" -x "*/*/*.git*" -x "includes/*" -x "ext*.json" -x "favorites*.php"
+ZIPIGNORES = -x "*.git*" -x "*.svn*" -x "thumbs/*" -x "*.zip" -x "tests/*" -x Makefile -x "*.sh" -x "*/*/*.git*" 
 
 
 
 $(ZIPFILE): 
 	@echo "-------------------------------------------------------"
 	@echo "Creating zip file for: $@"
-	@rm -f $@
-	@(cd $(ROOT); zip -r $@ * $(ZIPIGNORES))
+	@rm -f ../$@
+	@(cd $(ROOT)/joomla; zip -r ../$@ * $(ZIPIGNORES))
+
+$(MZIPFILE): 
+	@echo "-------------------------------------------------------"
+	@echo "Creating zip file for: $@"
+	@rm -f ../$@
+	@(cd $(ROOT)/Mediawiki; zip -r ../$@ * $(ZIPIGNORES))
 
 
 fixversions:

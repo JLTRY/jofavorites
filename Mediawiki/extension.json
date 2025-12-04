@@ -1,11 +1,11 @@
 {
 	"name": "JOFavorites",
-	"version": "1.0",
+	"version": "1.0.0",
 	"author": [
 		"JEan-Luc Tryoen"
 	],
 	"url": "https://wiki.jltryoen.fr",
-    "description": "Display favorites exported from Firefox or Microsoft Edge",
+	"description": "Display favorites exported from Firefox or Microsoft Edge",
 	"license-name": "GPL-2.0-or-later",
 	"type": "parserhook",
 	"requires": {
@@ -16,7 +16,7 @@
 			"i18n"
 		]
 	},
-    "config": {
+	"config": {
 		"JOFavoritesuriroot": {
 			"value": "http://joomla.jltryoen.fr/",
 			"description": "The root uri to retrieve favicons"
@@ -39,14 +39,14 @@
 		}
 	},
 	"ExtensionMessagesFiles": {
-		"favorites": "favoritesparser.i18n.php"
+		"favorites": "favorites.i18n.alias.php"
 	},
 
-    "AutoloadNamespaces": {
+	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\JOFavorites\\": "includes/"
 	},
 	"AutoloadClasses": {
-        "FavoritesHooks": "includes/FavoritesHooks.php",
+		"FavoritesHooks": "includes/FavoritesHooks.php",
 		"FavoritesParser": "includes/FavoritesParser.php",
 		"Favorites": "includes/Favorites.php"
 	},
@@ -54,7 +54,7 @@
 		"ParserFirstCallInit" :"FavoritesHooks",
 		"BeforePageDisplay": "FavoritesHooks"
 	},
-    "HookHandlers": {
+	"HookHandlers": {
 		"FavoritesHooks": {
 			"class": "MediaWiki\\Extension\\JOFavorites\\FavoritesHooks",
 			"services": [
