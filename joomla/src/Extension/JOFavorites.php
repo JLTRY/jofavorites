@@ -73,7 +73,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         if (!$this->getApplication()->isClient('site')) {
             return;
         }
-
+        //Escape fast
         if (!$this->params->get('enabled', 1)) {
             return true;
         }

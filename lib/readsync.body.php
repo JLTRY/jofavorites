@@ -56,7 +56,9 @@ function readsync($params, &$result)
         return false;
     }
     if (array_key_exists('url', $params)) {
-        $children = [ new htmlfile(null, array("title" => $params['url'], "bmkUri" => $params['url']))];
+        $children = [ new htmlfile(null, 
+                                    array("title" => (array_key_exists('name', $params) ?$params['name']:$params["url"]),
+                                          "bmkUri" => $params['url']))];
         $field = 'url';
         $find = true;
     } elseif (array_key_exists('path', $params)) {
