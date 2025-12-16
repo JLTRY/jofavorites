@@ -1,0 +1,20 @@
+<?php
+
+
+/**
+ * Implements hook_theme().
+ */
+function shortcode_favorites_theme() {
+	$test;
+	return [// Quote.
+		'shortcode_favorites' => [
+		'variables' => ['author' => NULL, 'class' => NULL, 'text' => ''],
+		]
+	];
+}
+
+
+
+function shortcode_favorites_preprocess_page(&$variables) {
+	$variables['#attached']['library'][] = 'shortcode_favorites/styling';
+}

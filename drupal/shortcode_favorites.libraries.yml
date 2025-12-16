@@ -1,0 +1,11 @@
+styling:
+  version: VERSION
+  css:
+    component:
+        media/css3treeview.css : {}
+  js:
+    media/js/favorites.js: {}
+    media/js/url.min.js: {}
+  dependencies:
+    - core/jquery
+
