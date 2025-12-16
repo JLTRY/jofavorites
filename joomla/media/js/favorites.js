@@ -1,9 +1,9 @@
 //add-on to jquery
-$.expr[':'].textEquals = function(a, i, m) {
-    return $(a).text().match(("^" + RegExp.escape(m[3]) + "$"));
+jQuery.expr[':'].textEquals = function(a, i, m) {
+    return jQuery(a).text().match(("^" + RegExp.escape(m[3]) + "$"));
 };
 
-function changebackground(item, iconUrl, exists=false) {
+function changebackground($, item, iconUrl, exists=false) {
 	if (iconUrl && iconUrl != "") {
 		//console.log("icon:" + iconUrl);
 		var img = $('<img>');
@@ -31,14 +31,14 @@ function changebackground(item, iconUrl, exists=false) {
  }
 
 
-$(document).ready(function() {
+jQuery(document).ready(function($) {
 	$('.css-treeview').each(function () {
 		$(this).find('.htmlfile').each(function () {
 			var item = this;
 			var url = new Url(this.href);
 			if (0) {//$(this).attr('icon') && $(this).attr('icon')!="") {
 				//console.log("icon set for:" +  url.host + ":" +$(item).text());
-				changebackground(item, $(this).attr('icon'), false);
+				changebackground($, item, $(this).attr('icon'), false);
 			}else if ((url.protocol == 'https') ||(url.protocol == 'http')){
 				//console.log("retrieving:" + url + " for " +  url.host +":" + $(item).text());
 				var url = uriroot + "index.php?option=com_ajax&plugin=jofavorites&" + 
@@ -54,7 +54,7 @@ $(document).ready(function() {
 									if (result.success) {
 										var icon = result.data[0];
 										//console.log("change background for " + $(item).text() +":with:" + icon);
-										changebackground(item, icon, true);
+										changebackground($, item, icon, true);
 									}
 								}, item)
 				});

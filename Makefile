@@ -1,8 +1,10 @@
 VERSION = "1.0.3"
-MVERSION = "1.0.0"
+MEDIAWIKIVERSION = "1.0.0"
+DRUPALVERSION = "1.0.1"
 PACKAGE = jofavorites
 ZIPFILE = $(PACKAGE)-$(VERSION).zip
-MZIPFILE = $(PACKAGE)-$(MVERSION).zip
+MEDIAWIKIZIPFILE = mediawiki$(PACKAGE)-$(MEDIAWIKIVERSION).zip
+DRUPALZIPFILE = shortcode_favorites-$(DRUPALVERSION).zip
 UPDATEFILE = $(PACKAGE)-update.xml
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MKFILE_DIR := $(dir $(MKFILE_PATH))
@@ -14,7 +16,7 @@ PACKAGES = $(ROOT)/packages
 
 .PHONY: $(ZIPFILE)
 
-ALL : $(ZIPFILE) fixsha $(MZIPFILE)
+ALL : $(ZIPFILE) fixsha $(MEDIAWIKIZIPFILE) $(DRUPALZIPFILE)
 
 
 
@@ -28,11 +30,17 @@ $(ZIPFILE):
 	@rm -f ../$@
 	@(cd $(ROOT)/joomla; zip -r ../$@ * $(ZIPIGNORES))
 
-$(MZIPFILE): 
+$(MEDIAWIKIZIPFILE): 
 	@echo "-------------------------------------------------------"
 	@echo "Creating zip file for: $@"
 	@rm -f ../$@
 	@(cd $(ROOT)/Mediawiki; zip -r ../$@ * $(ZIPIGNORES))
+
+$(DRUPALZIPFILE): 
+	@echo "-------------------------------------------------------"
+	@echo "Creating zip file for: $@"
+	@rm -f ../$@
+	@(cd $(ROOT)/drupal; zip -r ../$@ * $(ZIPIGNORES))
 
 
 fixversions:

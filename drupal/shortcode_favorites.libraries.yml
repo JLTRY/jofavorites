@@ -2,7 +2,7 @@ styling:
   version: VERSION
   css:
     component:
-        media/css3treeview.css : {}
+        media/css/css3treeview.css : {}
   js:
     media/js/favorites.js: {}
     media/js/url.min.js: {}

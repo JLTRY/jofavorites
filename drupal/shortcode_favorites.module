@@ -18,3 +18,18 @@ function shortcode_favorites_theme() {
 function shortcode_favorites_preprocess_page(&$variables) {
 	$variables['#attached']['library'][] = 'shortcode_favorites/styling';
 }
+
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function shortcode_favorites_page_attachments_alter(array &$attachments) {
+  $uriroot = "http://joomla.jltryoen.fr/";
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#tag' => 'script',
+      '#value' => '<script>var uriroot="' . $uriroot  .'";</script>',
+    ],
+    'shortcode_favorites',
+  ];
+}
