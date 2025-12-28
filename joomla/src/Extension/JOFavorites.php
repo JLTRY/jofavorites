@@ -14,9 +14,7 @@
 namespace JLTRY\Plugin\Content\JOFavorites\Extension;
 
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
-use Joomla\CMS\Event\Model\BeforeSaveEvent;
-use Joomla\CMS\Event\Result\ResultAwareInterface;
-use Joomla\Event\Event;
+use Joomla\CMS\Event\Plugin\AjaxEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Uri\Uri;
@@ -36,7 +34,7 @@ define('JOFAV_EXEXP_FAV_PATTERN', "#{favorites (.*?)}#s");
  * JOFavorites Content Plugin
  *
  * @package     Joomla.Plugin
- * @subpackage  Content.JOCodeHighlight
+ * @subpackage  Content.JOFavorites
  */
 class JOFavorites extends CMSPlugin implements SubscriberInterface
 {
@@ -62,10 +60,9 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         }
     }
     /**
-     * @param   string    The context of the content being passed to the plugin.
-     * @param   object    The article object.  Note $article->text is also available
-     * @param   object    The article params
-     * @param   integer  The 'page' number
+    * Example prepare content method in Joomla 1.6/1.7/2.5
+    *
+    * @param  ContentPrepareEvent The context for content prepare
      */
     public function onContentPrepare(ContentPrepareEvent $event)
     {
@@ -81,6 +78,8 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         // In Joomla 4 a generic Event is passed
         // In Joomla 5 a concrete ContentPrepareEvent is passed
         [$context, $article, $params, $page] = array_values($event->getArguments());
+        // use only on com_content 
+        if ( strpos($context, 'com_content') === false) return true;
         // Simple performance check to determine whether bot should process further.
         if (strpos($article->text, '{favorites') === false) {
             return true;
@@ -94,9 +93,11 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         $count = count($matches[0]);
         // plugin only processes if there are any instances of the plugin in the text
         if ($count) {
+           
             for ($i = 0; $i < $count; $i++) {
                 if (@$matches[1][$i]) {
                     $inline_params = $matches[1][$i];
+                    Log::add('found favorites :=>:' . $inline_params .":" . $context , Log::WARNING, 'jofavorites');
                     // accept both syntax {favorites name=xxx;output=css3treeview} {favorites name="xxx" output="css3treeview"}
                     if ( strpos( $inline_params, "\"") === false ) {
                         $localparams = array();
@@ -204,7 +205,6 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
     public function onAjaxJOFavoritesUpload($file)
     {
         if (!$file || !isset($file['tmp_name'])) {
-            //$app->enqueueMessage("onAjaxJoFavoritesUpload no file uploaded", "warning");
             echo new \Joomla\CMS\Response\JsonResponse(null, 'No file uploaded', true);
             $app->close();
         }
@@ -214,10 +214,8 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         $dest = $uploadDir . $filename;
         if (File::upload($file['tmp_name'], $dest)) {
             $relativePath = 'files/jofavorites/' . $filename;
-        //$app->enqueueMessage("onAjaxJoFavoritesUpload " . $relativePath, "warning");
             $output = ['path' => $relativePath];
         } else {
-        //$app->enqueueMessage("onAjaxJoFavoritesUpload upload failed", "warning");
             $output = 'Upload failed';
         }
         return $output;
@@ -246,7 +244,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
     }
     
 
-    public function onAjaxJOFavorites(Event $event): void
+    public function onAjaxJOFavorites(AjaxEvent $event): void
     {
         // Permissions check: Only allow backend users, etc.
         $app = Factory::getApplication();

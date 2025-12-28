@@ -8,4 +8,5 @@ dependencies:
 libraries:
   - shortcode_favorites/global-styling
 package: 'Input filters'
+version: '1.0.2'
 

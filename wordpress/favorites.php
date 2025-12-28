@@ -7,7 +7,7 @@
 Plugin Name: JLTFavorites
 Description: Permet de générer automatiquement une liste de favoris
 Author: JL TRYOEN
-Version: 1.0
+Version: 1.0.1
 Author URI: http://www.jltryoen.Fr
 */
 define('_JEXEC', 1);

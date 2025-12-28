@@ -18,6 +18,10 @@ The package 1 plugins
 ## Example
 
 
+## 2025-12-29 version 1.0.2
+
+add mediawiki drupal wordpress
+new ajax mechanism
 
 ## 2025-10-18 version 1.0.0
 

@@ -52,11 +52,14 @@ jQuery(document).ready(function($) {
 									//console.log(code_html);
 									result = JSON.parse(code_html);
 									if (result.success) {
-										var icon = result.data[0];
+										var icon = result.data;
 										//console.log("change background for " + $(item).text() +":with:" + icon);
 										changebackground($, item, icon, true);
 									}
-								}, item)
+								}, item),
+					error : function(returnval) {
+							console.log("failure for favorites " +  returnval);
+					}
 				});
 			}
 		});
