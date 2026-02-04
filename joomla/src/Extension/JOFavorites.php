@@ -93,7 +93,6 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         $count = count($matches[0]);
         // plugin only processes if there are any instances of the plugin in the text
         if ($count) {
-           
             for ($i = 0; $i < $count; $i++) {
                 if (@$matches[1][$i]) {
                     $inline_params = $matches[1][$i];

@@ -21,6 +21,9 @@
 		<folder>js</folder>
 		<folder>css</folder>
 	</media>
+	<updateservers>
+       <server type="extension" priority="1" name="JO's Favorites update">https://raw.githubusercontent.com/JLTRY/jofavorites/master/joomla/jofavorites-update.xml</server>
+    </updateservers>
 	<config>
 		<fields name="params">
 			<fieldset name="basic"
