@@ -2,7 +2,7 @@
 
 # Get the release version number
 ZIPFILE=$1
-UPDATEFILE=$(find . -name $2 | tr -d '\n')
+UPDATEFILE=$2
 
 echo "fixsha : $UPDATEFILE with sha256 of $1";
 
