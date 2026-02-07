@@ -157,6 +157,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         );
         $options->set('follow_location', true);
         $headers = array();
+        Log::add('favorites getsync:=>:'. print_r($url, true), Log::WARNING, 'favorites');
         try {
             $response =  \Joomla\CMS\Http\HttpFactory::getHttp($options)->get($url, $headers, $timeout);
         } catch (UnexpectedValueException $e) {
@@ -168,6 +169,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         // An unexpected error in processing; don't let this failure kill the site
             throw new RuntimeException('Unexpected error connecting to server: ' . $e->getMessage(), 500);
         }
+        Log::add('favorites getsync:<=:'. $response->getBody(), Log::WARNING, 'favorites');
         $content .= $response->getBody();
     }
 
@@ -197,7 +199,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         } else {
             $this->readsync($_params, $content);
         }
-        //Log::add('favorites:=>:'. print_r($content, true), Log::WARNING, 'favoris');
+        //Log::add('favorites:=>:'. print_r($content, true), Log::WARNING, 'favorites');
         return $content;
     }
 
