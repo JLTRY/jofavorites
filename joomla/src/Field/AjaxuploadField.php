@@ -56,10 +56,9 @@ xhr.onload = function () {
     if (xhr.status === 200) {
         try {
             var resp = JSON.parse(xhr.responseText);
-            if (resp.data && resp.data[0].path) {
-                document.getElementById("' . $id . '").value = resp.data[0].path;
-            document.getElementById("' . $id .
-                '_preview").innerHTML = "<span>Uploaded: " + resp.data[0].path + "</span>";
+            if (resp.data && resp.data.path) {
+                document.getElementById("' . $id . '").value = resp.data.path;
+                document.getElementById("' . $id . '_preview").innerHTML = "<span>Uploaded: " + resp.data.path + "</span>";
             } else {
                 alert("Upload failed: " + (resp.message || "Unknown error"));
             }

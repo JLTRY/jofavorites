@@ -34,7 +34,7 @@ class FavoritesShortcode extends ShortcodeBase {
 	// Filter away empty attributes.
     $attributes = array_filter($attributes);
 	$content = "";
-    $attributes['jsonfile'] = realpath(dirname(__FILE__) . "/../../../../../../joomla_5.0/files/jofavorites/bookmarks.home2.json");
+    $attributes['jsonfile'] = realpath(dirname(__FILE__) . "/../../../../../../joomla_6.0/files/jofavorites/bookmarks.home2.json");
 	readsync($attributes, $content);
 
 	// Build element attributes to be used in twig.

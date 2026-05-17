@@ -16,6 +16,7 @@ namespace JLTRY\Plugin\Content\JOFavorites\Extension;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Event\Plugin\AjaxEvent;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Utility\Utility;
@@ -23,7 +24,6 @@ use Joomla\Event\SubscriberInterface;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\Log\Log;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
