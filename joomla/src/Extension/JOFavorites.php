@@ -130,7 +130,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
 
     private function readsync($_params, &$content)
     {
-        require_once(dirname(__FILE__) . "/../../lib/readsync.body.php");
+        require_once(dirname(__FILE__) . "/../../lib/favorites/readsync.body.php");
         return readsync($_params, $content);
     }
 
