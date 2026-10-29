@@ -1,10 +1,12 @@
-VERSION = "1.0.4"
-MEDIAWIKIVERSION = "1.0.1"
-DRUPALVERSION = "1.0.1"
+VERSION = "1.0.5"
+MEDIAWIKIVERSION = "1.0.2"
+DRUPALVERSION = "1.0.2"
+WORDPRESSVERSION = "1.0.2"
 PACKAGE = jofavorites
 ZIPFILE = $(PACKAGE)-$(VERSION).zip
 MEDIAWIKIZIPFILE = mediawiki$(PACKAGE)-$(MEDIAWIKIVERSION).zip
 DRUPALZIPFILE = shortcode_favorites-$(DRUPALVERSION).zip
+WORDPRESSZIPFILE = wordpress_favorites-$(WORDPRESSVERSION).zip
 UPDATEFILE = joomla/$(PACKAGE)-update.xml
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MKFILE_DIR := $(dir $(MKFILE_PATH))
@@ -16,7 +18,7 @@ PACKAGES = $(ROOT)/packages
 
 .PHONY: $(ZIPFILE)
 
-ALL : $(ZIPFILE) fixsha $(MEDIAWIKIZIPFILE) $(DRUPALZIPFILE)
+ALL : $(ZIPFILE) fixsha $(MEDIAWIKIZIPFILE) $(DRUPALZIPFILE) $(WORDPRESSZIPFILE)
 
 
 
@@ -41,6 +43,13 @@ $(DRUPALZIPFILE):
 	@echo "Creating zip file for: $@"
 	@rm -f ../$@
 	@(cd $(ROOT)/drupal; zip -r ../$@ * $(ZIPIGNORES))
+
+$(WORDPRESSZIPFILE): 
+	@echo "-------------------------------------------------------"
+	@echo "Creating zip file for: $@"
+	@rm -f ../$@
+	@(cd $(ROOT)/wordpress; zip -r ../$@ * $(ZIPIGNORES))
+
 
 
 fixversions:
