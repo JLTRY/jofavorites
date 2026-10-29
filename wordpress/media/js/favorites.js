@@ -30,38 +30,43 @@ function changebackground($, item, iconUrl, exists=false) {
 	}
  }
 
-
 jQuery(document).ready(function($) {
-	$('.css-treeview').each(function () {
-		$(this).find('.htmlfile').each(function () {
-			var item = this;
-			var url = new Url(this.href);
-			if (0) {//$(this).attr('icon') && $(this).attr('icon')!="") {
-				//console.log("icon set for:" +  url.host + ":" +$(item).text());
-				changebackground($, item, $(this).attr('icon'), false);
-			}else if ((url.protocol == 'https') ||(url.protocol == 'http')){
-				//console.log("retrieving:" + url + " for " +  url.host +":" + $(item).text());
-				var url = uriroot + "index.php?option=com_ajax&plugin=jofavorites&" + 
-						"format=json&group=content&method=grabicon&url64=" +  btoa(url.protocol +"://" + url.host);
-				//console.log("retrieving:" + url);
-				$.ajax({
-					url : url,
-					type : 'GET',
-					dataType : 'html', // On désire recevoir du HTML
-					success : $.proxy(function(code_html, statut){ // code_html contient le HTML renvoyé
-									//console.log(code_html);
-									result = JSON.parse(code_html);
-									if (result.success) {
-										var icon = result.data;
-										//console.log("change background for " + $(item).text() +":with:" + icon);
-										changebackground($, item, icon, true);
-									}
-								}, item),
-					error : function(returnval) {
-							console.log("failure for favorites " +  returnval);
-					}
-				});
-			}
-		});
-	});
+    var items = $('.css-treeview .htmlfile').toArray();
+
+    function processNextItem() {
+
+        var item = items.shift();
+        if (!item) return;
+        var url = new Url(item.href);
+        await new Promise(r => setTimeout(r, 500));
+        if ((url.protocol == 'https') || (url.protocol == 'http')) {
+            var requestUrl = uriroot + "index.php?option=com_ajax&plugin=jofavorites&" +
+                "format=json&group=content&method=grabicon&url64=" + btoa(url.protocol + "://" + url.host);
+
+            $.ajax({
+                url: requestUrl,
+                type: 'GET',
+                dataType: 'html',
+                success: function(code_html) {
+                    try {
+                        var result = JSON.parse(code_html);
+                        if (result && result.success) {
+                            changebackground($, item, result.data, true);
+                        }
+                    } catch (e) {
+                        console.log('JSON parse error for favorites:', e);
+                    }
+                    processNextItem(); // next item only after this finishes
+                },
+                error: function(xhr, status, error) {
+                    console.log('failure for favorites', status, error);
+                    processNextItem(); // continue even if one fails
+                }
+            });
+        } else {
+            processNextItem(); // skip invalid URLs
+        }
+    }
+
+    processNextItem();
 });
