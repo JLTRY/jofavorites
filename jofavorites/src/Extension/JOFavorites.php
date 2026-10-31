@@ -130,7 +130,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
 
     private function readsync($_params, &$content)
     {
-        require_once(dirname(__FILE__) . "/../../lib/favorites/readsync.body.php");
+        require_once(JPATH_LIBRARIES . "/libfavorites/src/readsync.body.php");
         return readsync($_params, $content);
     }
 
@@ -191,9 +191,10 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
         /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
         /* in ConsoleApplication it does not exist); */
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        $wa->getRegistry()->addRegistryFile('media/plg_content_jofavorites/joomla.asset.json');
-        $wa->usePreset("plugin.jofavorites");
-        $wa->addInlineScript('var uriroot="' . URI::root() . '";', ['position' => 'before'], [], ['plugin.jofavorites']);
+        $wa->getRegistry()->addRegistryFile('media/libfavorites/joomla.asset.json');
+        $wa->usePreset("jltry.favorites");
+        $wa->addInlineScript('var uriroot="' . URI::root() . '";', ['position' => 'before'], [], ['jltry.favorites']);
+
         if ($this->params->get('external')) {
             $this->getsync($_params, $content);
         } else {

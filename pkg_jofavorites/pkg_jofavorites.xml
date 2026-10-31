@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="4.0" method="upgrade">
+	<name>PKG_JOGALLERY</name>
+	<packagename>jogallery</packagename>
+	<version>1.0.6</version>
+	<creationDate>October 30, 2026</creationDate>
+	<copyright>(C) 2007-2024 JL Tryoen. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<author>J.L. Tryoen</author>
+	<authorEmail>jltryoen@orange.fr</authorEmail>
+    <authorUrl>https://joomla.jltryoen.fr</authorUrl>
+	<packager>J.L. Tryoen</packager>
+    <packagerurl>https://github.com/JLTRY/jogallery</packagerurl>
+	<description>PKG_JOGALLERY_DESCRIPTION</description>
+
+	<files folder="packages">
+		<file type="component" id="com_jogallery">com_jogallery.zip</file>
+		<file type="plugin" id="jogallery"  group="content" client="site">jogallery.zip</file>
+		<file type="plugin" id="jodirectory"  group="content" client="site">jodirectory.zip</file>
+		<file type="plugin" id="jogallery"  group="editors-xtd" client="site">jogalleryineditor_plugin.zip</file>
+		<file type="library" id="lib_jltry">lib_jltry.zip</file>
+	</files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.pkg_jogallery.sys.ini</language>
+        <language tag="fr-FR">language/fr-FR/fr-FR.pkg_jogallery.sys.ini</language>
+    </languages>
+    <updateservers>
+       <server type="extension" priority="1" name="JO's Galleries updates">https://raw.githubusercontent.com/JLTRY/jogallery/master/joomla/pkg_jogallery/update_pkg.xml</server>
+    </updateservers>
+</extension>

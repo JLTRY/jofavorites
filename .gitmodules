@@ -1,3 +1,6 @@
 [submodule "lib/PHP-Grab-Favicon"]
-	path = lib/PHP-Grab-Favicon
+	path = jofavorites/lib/PHP-Grab-Favicon
 	url = git@github.com:JLTRY/PHP-Grab-Favicon
+[submodule "lib/libfavorites"]
+	path = libfavorites
+	url = https://github.com/JLTRY/libfavorites

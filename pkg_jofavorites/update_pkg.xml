@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updates>
+	<update>
+		<name>JOFavorites</name>
+		<description>JO's Favorites</description>
+		<element>pkg_jofavorites</element>
+		<type>package</type>
+		<client>site</client>
+		<version>1.0.6</version>
+		<infourl title="JO's Favorites">https://github.com/JLTRY/jofavorites/</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/JLTRY/jofavorites/releases/download/v1.0.6/pkg_jofavorites-1.0.6.zip</downloadurl>
+		</downloads>
+		<tags>
+			<tag>Stable</tag>
+		</tags>
+		<maintainer>JL TRYOEN</maintainer>
+		<maintainerurl>https://github.com/JLTRY/jofavorites</maintainerurl>
+		<php_minimum>8.0</php_minimum>
+		<targetplatform name="joomla" version="(4\.[01234]|5\.[01234]|6\.[01])"/>
+		<sha256>CC2A369468BCC4039F15A3246652D7E0E85AA583873E1FAA63FF7991AA0E419D</sha256>
+		<sha384>7412786E54187E15A88252787037FBC6B15BCFBE2B195C270B6E3DB7632AE1DA71C5FBF7708590C7D8B58D043E70222B</sha384>
+		<sha512>08155F9721D4D862DA8F20FA6946E55B399DEAB9EE7CED302C24E57FAF38EB844A922752B11D123F88CD0BD4263527ACCEEA8E2E5469079736A860E859ED8490</sha512>
+	</update>
+</updates>
