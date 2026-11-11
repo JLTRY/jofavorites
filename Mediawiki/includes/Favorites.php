@@ -5,7 +5,9 @@
 
 namespace MediaWiki\Extension\JOFavorites;
 use MediaWiki\Parser\PPFrame_Hash;
-define ('_JEXEC', 1);
+if (!defined('_JEXEC')) {
+    define('_JEXEC', 1);
+}
 
 class Favorites{
 
