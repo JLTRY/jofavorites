@@ -23,7 +23,7 @@
 		}
 	},
 	"ResourceFileModulePaths": {
-		"localBasePath": "media",
+		"localBasePath": "libfavorites/media",
 		"remoteExtPath": "JOFavorites/media"
 	},
 	"ResourceModules": {
@@ -42,8 +42,8 @@
 		"favorites": "favorites.i18n.alias.php"
 	},
 
-	"AutoloadNamespaces": {
-		"MediaWiki\\Extension\\JOFavorites\\": "includes/"
+	"AutoloadNamespaces": {"MediaWiki\\Extension\\JOFavorites\\": "includes/",
+		"JLTRY\\LibFavorites\\": "libfavorites/src/"
 	},
 	"AutoloadClasses": {
 		"FavoritesHooks": "includes/FavoritesHooks.php",

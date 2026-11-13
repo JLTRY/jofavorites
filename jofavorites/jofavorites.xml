@@ -2,7 +2,7 @@
 <extension type="plugin" group="content" method="upgrade">
 	<name>PLG_CONTENT_JOFAVORITES</name>
 	<author>Jean-Luc TRYOEN</author>
-	<creationDate>October 30, 2026</creationDate>
+	<creationDate>November 13, 2026</creationDate>
 	<copyright>Copyright (C) 2012 - 2025 Jean-Luc TRYOEN. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
 	<authorEmail>jltryoen@orange.fr</authorEmail>
@@ -16,9 +16,6 @@
 		<folder>lib</folder>
 		<folder>language</folder>
 	</files>
-	<updateservers>
-       <server type="extension" priority="1" name="JO's Favorites update">https://raw.githubusercontent.com/JLTRY/jofavorites/master/joomla/jofavorites-update.xml</server>
-    </updateservers>
 	<config>
 		<fields name="params">
 			<fieldset name="basic"

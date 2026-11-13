@@ -1,5 +1,5 @@
 VERSION = "1.0.6"
-MEDIAWIKIVERSION = "1.0.2"
+MEDIAWIKIVERSION = "1.0.3"
 DRUPALVERSION = "1.0.2"
 WORDPRESSVERSION = "1.0.2"
 PACKAGE = pkg_jofavorites
@@ -21,14 +21,11 @@ PACKAGES = $(ROOT)/packages
 
 ZIPIGNORES = -x "*.git*" -x "*.svn*" -x "thumbs/*" -x "*.zip" -x "tests/*" -x Makefile -x "*.sh" -x "*/*/*.git*" 
 
-INSTALLS = jofavorites libfavorites
-NAMES = $(INSTALLS) $(EXTRAS)
+INSTALLS = jofavorites
+EXTRAS = libfavorites
+ZIPS = $(INSTALLS:=.zip) $(EXTRAS:=.zip)
 
-ZIPS = $(NAMES:=.zip)
-
-parts: $(ZIPS)
-
-ALL : parts $(ZIPFILE) fixsha $(MEDIAWIKIZIPFILE) $(DRUPALZIPFILE) $(WORDPRESSZIPFILE)
+all : $(ZIPS) $(ZIPFILE) fixsha $(MEDIAWIKIZIPFILE) $(DRUPALZIPFILE) $(WORDPRESSZIPFILE)
 
 %.zip:
 	@echo "-------------------------------------------------------"
@@ -36,42 +33,43 @@ ALL : parts $(ZIPFILE) fixsha $(MEDIAWIKIZIPFILE) $(DRUPALZIPFILE) $(WORDPRESSZI
 	@rm -f $@
 	@(cd $*; zip -r ../$@ * $(ZIPIGNORES))
 
-$(ZIPFILE): $(ZIPS)
+$(ZIPFILE): $(ZIPS) $(LIBZIPS)
 	@echo "-------------------------------------------------------"
 	@echo "Creating extension zip file: $(ZIPFILE)"
-	@mv $(INSTALLS:=.zip) $(PACKAGE)/packages/
-	@(cd $(PACKAGE); zip -r ../$@ * $(ZIPIGNORES))
+	@mv -v $(ZIPS) $(PACKAGE)/packages/
+	@(cd $(PACKAGE); zip -r ../$@ *)
 	@echo "-------------------------------------------------------"
 	@echo "Finished creating package $(ZIPFILE)."
 
 
-$(MEDIAWIKIZIPFILE): 
+$(MEDIAWIKIZIPFILE):
 	@echo "-------------------------------------------------------"
 	@echo "Creating zip file for: $@"
+	@echo "root:" $(ROOT)
 	@rm -f ../$@
-	@(cd $(ROOT)/Mediawiki; zip -r ../$@ * $(ZIPIGNORES))
+	@(cd $(ROOT)/Mediawiki;ln -sf $(ROOT)/libfavorites ;zip -r ../$@ * $(ZIPIGNORES))
 
-$(DRUPALZIPFILE): 
+$(DRUPALZIPFILE):
 	@echo "-------------------------------------------------------"
 	@echo "Creating zip file for: $@"
 	@rm -f ../$@
 	@(cd $(ROOT)/drupal; zip -r ../$@ * $(ZIPIGNORES))
 
-$(WORDPRESSZIPFILE): 
+$(WORDPRESSZIPFILE):
 	@echo "-------------------------------------------------------"
 	@echo "Creating zip file for: $@"
 	@rm -f ../$@
-	@(cd $(ROOT)/wordpress; zip -r ../$@ * $(ZIPIGNORES))
+	@(cd $(ROOT)/wordpress;ln -sf $(ROOT)/libfavorites/media; zip -r ../$@ * $(ZIPIGNORES))
 
 
 
 fixversions:
 	@echo "Updating all install xml files to version $(VERSION)"
-	@find . \( -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec  ./fixvd.sh {} $(VERSION) \;
+	@find $(INSTALLS) $(PACKAGE) \( -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec  ./fixvd.sh {} $(VERSION) \;
 
 revertversions:
 	@echo "Reverting all install xml files"
-	@find . \( -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec git checkout {} \;
+	@find $(INSTALLS) $(PACKAGE) \( -name '*.xml' ! -name 'default.xml' ! -name 'metadata.xml' ! -name 'config.xml' \) -exec git checkout {} \;
 
 fixsha:
 	@echo "Updating update xml files with checksums"
