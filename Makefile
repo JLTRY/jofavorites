@@ -1,5 +1,5 @@
 VERSION = "1.0.6"
-MEDIAWIKIVERSION = "1.0.3"
+MEDIAWIKIVERSION = "1.0.6"
 DRUPALVERSION = "1.0.2"
 WORDPRESSVERSION = "1.0.2"
 PACKAGE = pkg_jofavorites
@@ -33,7 +33,7 @@ all : $(ZIPS) $(ZIPFILE) fixsha $(MEDIAWIKIZIPFILE) $(DRUPALZIPFILE) $(WORDPRESS
 	@rm -f $@
 	@(cd $*; zip -r ../$@ * $(ZIPIGNORES))
 
-$(ZIPFILE): $(ZIPS) $(LIBZIPS)
+$(ZIPFILE): $(ZIPS)
 	@echo "-------------------------------------------------------"
 	@echo "Creating extension zip file: $(ZIPFILE)"
 	@mv -v $(ZIPS) $(PACKAGE)/packages/
