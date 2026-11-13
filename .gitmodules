@@ -4,3 +4,4 @@
 [submodule "lib/libfavorites"]
 	path = libfavorites
 	url = https://github.com/JLTRY/libfavorites
+	branch = master

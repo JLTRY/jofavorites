@@ -23,6 +23,7 @@ use Joomla\CMS\Utility\Utility;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
+use JLTRY\LibFavorites\ReadSync;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -88,7 +89,7 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
             for ($i = 0; $i < $count; $i++) {
                 if (@$matches[1][$i]) {
                     $inline_params = $matches[1][$i];
-                    Log::add('found favorites :=>:' . $inline_params . ':' . $context, Log::WARNING, 'jofavorites');
+                    Log::add('found new favorites :=>:' . $inline_params . ':' . $context, Log::WARNING, 'jofavorites');
                     if (strpos($inline_params, '"') === false) {
                         $localparams = array();
                         self::parseAttributes($inline_params, $localparams);
@@ -124,18 +125,8 @@ class JOFavorites extends CMSPlugin implements SubscriberInterface
      */
     private function readsync($_params, &$content)
     {
-        $libraryEntryPoint = JPATH_LIBRARIES . '/libfavorites/src/readsync.body.php';
-        if (!is_file($libraryEntryPoint)) {
-            throw new \RuntimeException('The JLTRY Favorites library is not installed: ' . $libraryEntryPoint);
-        }
-
-        require_once $libraryEntryPoint;
-
-        if (!function_exists('JLTRY\\LibFavorites\\readsync')) {
-            throw new \RuntimeException('The installed JLTRY Favorites library does not expose JLTRY\\LibFavorites\\readsync().');
-        }
-
-        return \JLTRY\LibFavorites\readsync($_params, $content);
+        Log::add('favorites:readsync', Log::WARNING, 'jofavorites');
+        return ReadSync::readsync($_params, $content);
     }
 
     private function getsync($_params, &$content)

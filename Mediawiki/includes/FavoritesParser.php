@@ -1,6 +1,7 @@
 <?php
 
 namespace MediaWiki\Extension\JOFavorites;
+use JLTRY\LibFavorites\ReadSync;
 if (!defined("_JEXEC")){
     define ('_JEXEC', 1);
 }
@@ -55,8 +56,7 @@ class FavoritesParser {
 		}
         $config = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
         $options['jsonfile'] = $config->get( "JOFavoritesbookmarksfile" );
-        require_once(dirname(__FILE__) . "/../lib/readsync.body.php");
-		\readsync($options, $input);
+		ReadSync::readsync($options, $input);
         $parser->getOutput()->addModules(["ext.favorites.favorites"]);
 		if (($options['output'] == 'mediawiki')||
 			($options['output'] == 'link') || 
